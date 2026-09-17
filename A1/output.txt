@@ -1,0 +1,49 @@
+# Simply copy and paste the output from your terminal here!
+
+# 1
+[jessicahollander@login-students CS3650]$ ls
+git-cheat-sheet-education.pdf  hello.c  output.txt  README.md
+
+# 2
+[jessicahollander@login-students CS3650]$ pwd
+/home/jessicahollander/CS3650
+
+# 3
+[jessicahollander@login-students CS3650]$ mkdir temp_direct
+[jessicahollander@login-students CS3650]$ ls
+git-cheat-sheet-education.pdf  hello.c  output.txt  README.md  temp_direct
+
+# 4
+[jessicahollander@login-students CS3650]$ rmdir temp_direct
+[jessicahollander@login-students CS3650]$ ls
+git-cheat-sheet-education.pdf  hello.c  output.txt  README.md
+
+# 5
+[jessicahollander@login-students CS3650]$ cat README.md
+# Assignment 1: Setting up!
+
+This is your starter code repo for Assignment 1. Please see the corresponding description on Canvas.
+
+# 6
+[jessicahollander@login-students CS3650]$ echo "Hello World"
+Hello World
+
+# 7
+[jessicahollander@login-students CS3650]$ nl README.md
+     1  # Assignment 1: Setting up!
+       
+     2  This is your starter code repo for Assignment 1. Please see the corresponding description on Canvas.
+
+# 8
+[jessicahollander@login-students CS3650]$ whoami
+jessicahollander
+
+# 9
+[jessicahollander@login-students CS3650]$ touch example.txt
+[jessicahollander@login-students CS3650]$ ls
+example.txt  git-cheat-sheet-education.pdf  hello.c  output.txt  README.md
+
+# 10
+[jessicahollander@login-students CS3650]$ mv example.txt blank.txt
+[jessicahollander@login-students CS3650]$ ls
+blank.txt  git-cheat-sheet-education.pdf  hello.c  output.txt  README.md
