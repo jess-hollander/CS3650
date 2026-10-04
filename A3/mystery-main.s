@@ -10,7 +10,6 @@ beer_message:
 
 .text
 .globl main
-.type main, @function
 .extern atol
 .extern crunch
 .extern puts
@@ -21,7 +20,7 @@ main:
   subq $16, %rsp
 
   cmpl $3, %edi
-  jne .Linvalid_arguments
+  jne invalid_arguments
 
   movq %rsi, -8(%rbp)
   movq 8(%rsi), %rdi
@@ -37,31 +36,28 @@ main:
   call crunch
 
   testq %rax, %rax
-  js .Lnegative
-  jz .Lzero
+  js negative
+  jz zero
 
   leaq beer_message(%rip), %rdi
-  jmp .Lprint_success
+  jmp print_success
 
-.Lnegative:
+negative:
   leaq hat_message(%rip), %rdi
-  jmp .Lprint_success
+  jmp print_success
 
-.Lzero:
+zero:
   leaq tea_message(%rip), %rdi
 
-.Lprint_success:
+print_success:
   call puts
   xorl %eax, %eax
   leave
   ret
 
-.Linvalid_arguments:
+invalid_arguments:
   leaq argument_error(%rip), %rdi
   call puts
   movl $1, %eax
   leave
   ret
-
-.size main, .-main
-.section .note.GNU-stack,"",@progbits

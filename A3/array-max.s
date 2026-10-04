@@ -1,33 +1,29 @@
 .text
 .globl array_max
-.type array_max, @function
 
 # unsigned long array_max(unsigned long count, unsigned long *values)
 array_max:
   testq %rdi, %rdi
-  jz .Lempty
+  jz empty
 
   movq (%rsi), %rax
   movq $1, %rcx
 
-.Lloop:
+loop:
   cmpq %rdi, %rcx
-  jae .Ldone
+  jae done
 
   movq (%rsi,%rcx,8), %rdx
   cmpq %rax, %rdx
-  jbe .Lnext
+  jbe next
   movq %rdx, %rax
 
-.Lnext:
+next:
   incq %rcx
-  jmp .Lloop
+  jmp loop
 
-.Lempty:
+empty:
   xorl %eax, %eax
 
-.Ldone:
+done:
   ret
-
-.size array_max, .-array_max
-.section .note.GNU-stack,"",@progbits
