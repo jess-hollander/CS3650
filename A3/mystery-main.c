@@ -1,23 +1,23 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 
-extern unsigned long array_max(unsigned long, unsigned long *);
+extern long crunch(long, long);
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    fprintf(stderr, "Missing argument.\n\nUsage: %s <n1> <n2> ...\n", argv[0]);
+  if (argc != 3) {
+    printf("Two arguments required.\n");
     return 1;
   }
 
-  unsigned long nums[argc - 1];
+  long result = crunch(atol(argv[1]), atol(argv[2]));
 
-  for (int i = 1; i < argc ; ++i) {
-    nums[i - 1] = atol(argv[i]);
+  if (result < 0) {
+    printf("hat\n");
+  } else if (result == 0) {
+    printf("tea\n");
+  } else {
+    printf("beer\n");
   }
 
-  printf("%lu\n", array_max(argc - 1, nums));
-
   return 0;
-
 }
