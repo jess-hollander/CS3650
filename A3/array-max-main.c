@@ -1,42 +1,23 @@
-.global main
 
-.text
+#include <stdio.h>
+#include <stdlib.h>
 
-main:
-  enter $0, $0
+extern unsigned long array_max(unsigned long, unsigned long *);
 
-  cmpl $2, %edi
-  jl else
-  movq 8(%rsi), %rdx
-  jmp continue
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    fprintf(stderr, "Missing argument.\n\nUsage: %s <n1> <n2> ...\n", argv[0]);
+    return 1;
+  }
 
-else:
-  movq $default_str, %rdx
+  unsigned long nums[argc - 1];
 
-continue:
-  movq a, %rdi
-  movq b, %rsi
-  call foo
+  for (int i = 1; i < argc ; ++i) {
+    nums[i - 1] = atol(argv[i]);
+  }
 
-  movq $format, %rdi
-  movq %rax, %rsi
-  movb $0, %al
-  call printf
+  printf("%lu\n", array_max(argc - 1, nums));
 
-  movq $0, %rax
-  leave
-  ret
+  return 0;
 
-.data
-
-format: 
-  .asciz "Result: %ld\n"
-
-default_str:
-  .asciz "13 characters"
-
-a:
-  .quad 10
-
-b: 
-  .quad 20
+}

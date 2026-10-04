@@ -1,9 +1,14 @@
-.PHONY: all clean
+BIN=mystery array-max
 
-all: mystery
+all: $(BIN)
 
 mystery: mystery-main.s libmystery.a
 	gcc -g -z noexecstack -no-pie mystery-main.s -L. -lmystery -o mystery
 
+array-max: array-max.s array-max-main.c
+	gcc -g -z noexecstack -no-pie array-max.s array-max-main.c -o array-max
+
 clean:
-	rm -f mystery
+	rm -f $(BIN)
+	rm -f *.o
+
