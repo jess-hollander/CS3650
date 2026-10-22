@@ -1,17 +1,27 @@
+#define _POSIX_C_SOURCE 200809L
+
+#include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../vector/vect.h"
 #include "tokens.h"
 
-const int BUFFER_SIZE = 1024;
-
 int main(int argc, char **argv) {
-  char buffer[BUFFER_SIZE];
+  (void)argc;
+  (void)argv;
+  char *buffer = NULL;
+  size_t capacity = 0;
+  ssize_t length = getline(&buffer, &capacity, stdin);
 
-  if (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
+  if (length >= 0) {
     vect_t *tokens = tokenize(buffer);
+    for (unsigned int i = 0; i < vect_size(tokens); i++) {
+      puts(vect_get(tokens, i));
+    }
+    vect_delete(tokens);
   }
 
-  /* TODO: Print all the tokens, one item per line */
-
+  free(buffer);
+  return ferror(stdin) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
