@@ -136,6 +136,39 @@ MunitResult test_vect_get_copy(const MunitParameter params[], void *data) {
   return MUNIT_OK;
 }
 
+MunitResult test_string_ownership(const MunitParameter params[], void *data) {
+  vect_t *v1 = data;
+  char added[] = "original";
+  char replacement[] = "replacement";
+
+  vect_add(v1, added);
+  added[0] = 'X';
+  munit_assert_string_equal(vect_get(v1, 0), "original");
+
+  vect_set(v1, 0, replacement);
+  replacement[0] = 'X';
+  munit_assert_string_equal(vect_get(v1, 0), "replacement");
+
+  return MUNIT_OK;
+}
+
+MunitResult test_self_aliasing(const MunitParameter params[], void *data) {
+  vect_t *v1 = data;
+
+  vect_add(v1, "first");
+  vect_add(v1, "second");
+  vect_set(v1, 0, vect_get(v1, 0));
+  vect_add(v1, vect_get(v1, 0));
+
+  munit_assert_uint(vect_size(v1), ==, 3);
+  munit_assert_uint(vect_current_capacity(v1), ==, 4);
+  munit_assert_string_equal(vect_get(v1, 0), "first");
+  munit_assert_string_equal(vect_get(v1, 1), "second");
+  munit_assert_string_equal(vect_get(v1, 2), "first");
+
+  return MUNIT_OK;
+}
+
 MunitResult test_delete_and_create(const MunitParameter params[], void *data) {
   vect_t *v1 = data;
 
@@ -233,6 +266,8 @@ MunitTest tests_basic[] = {
   VECTOR_FIXTURE("/remove_last", test_remove_last, NULL),
   VECTOR_FIXTURE("/get", test_vect_get, NULL),
   VECTOR_FIXTURE("/get_copy", test_vect_get_copy, NULL),
+  VECTOR_FIXTURE("/string_ownership", test_string_ownership, NULL),
+  VECTOR_FIXTURE("/self_aliasing", test_self_aliasing, NULL),
   { "/delete and create", test_delete_and_create, vector_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   MUNIT_TESTS_END
 };
